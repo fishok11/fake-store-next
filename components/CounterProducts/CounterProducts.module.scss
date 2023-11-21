@@ -1,0 +1,22 @@
+@tailwind components;
+@tailwind utilities;
+
+.actionContainer {
+  @apply flex flex-col gap-3 leading-relaxed h-max mt-4 bg-white rounded-xl w-64;
+
+  .price {
+    @apply text-2xl font-bold text-center;
+  }
+
+  .counterContainer {
+    @apply flex justify-around bg-slate-200 rounded-xl p-3 w-full;
+
+    .counterSimbol {
+      @apply text-lg font-semibold; 
+    }
+  }
+
+  .button {
+    @apply w-full text-center px-3 py-2 bg-blue-700 hover:shadow-xl duration-300 rounded-xl text-base font-semibold text-white;
+  }
+}

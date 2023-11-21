@@ -1,0 +1,35 @@
+// @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  @apply flex flex-col justify-between max-w-xs bg-white rounded-xl p-4 shadow-xl;
+
+  .link {
+    @apply flex flex-col;
+
+    .imageContainer {
+      @apply bg-white rounded-xl py-4;
+
+      .image {
+        @apply max-h-32 h-full mx-auto;
+      }
+    }
+
+    .title {
+      @apply inline-block text-base font-semibold mt-2 text-gray-800;
+    }
+  }
+
+  .actionContainer {
+    @apply flex justify-between align-middle mt-7;
+
+    .price {
+      @apply text-2xl font-bold;
+    }
+    
+    .button {
+      @apply block bg-blue-700 hover:shadow-xl duration-300 font-medium rounded-xl text-sm px-5 py-2.5 text-center text-white;
+    }
+  }
+}

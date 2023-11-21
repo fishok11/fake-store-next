@@ -24,4 +24,16 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-} */
+}  */
+
+body {
+  @apply flex w-full max-w-7xl mx-auto justify-between flex-col;
+}
+
+.productsContainer {
+  @apply grid grid-cols-3 gap-4 min-w-min;
+}
+
+.container {
+  @apply flex w-full max-w-7xl mx-auto justify-between;
+}

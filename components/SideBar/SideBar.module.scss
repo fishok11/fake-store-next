@@ -1,0 +1,18 @@
+// @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.container {
+  @apply w-max;
+  .titleCategories {
+    @apply text-xl font-bold inline-block py-2;
+  }
+  .button {
+    @apply w-full text-left px-3 py-2 hover:shadow-xl duration-300 rounded-xl text-lg font-semibold focus:shadow-xl text-inherit; 
+  }
+
+  .clearButton {
+    @apply w-full text-center px-3 py-2 bg-blue-700 hover:shadow-xl duration-300 rounded-xl text-lg font-semibold mt-10 text-white;
+  }
+}
