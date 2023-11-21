@@ -10,17 +10,17 @@ export const metadata: Metadata = {
 
 type ProductProps = {
   params: {
-    id: number;
+    id: string;
   };
 }
 
-const Product = async({ params: { id } }: ProductProps) => {
-  const product: Product | undefined = await getProduct(id)
+const ProductPage = async({ params: { id } }: ProductProps) => {
+  const product: Product | undefined | null = await getProduct(id)
 
-  if (product === undefined) {
+  if (product === undefined || product === null) {
     return null
   }
-
+  console.log(product);
   return (
       <div className={styles.container}>
         <div className={styles.productContainer}>
@@ -41,4 +41,4 @@ const Product = async({ params: { id } }: ProductProps) => {
   )
 }
 
-export default Product;
+export default ProductPage;
