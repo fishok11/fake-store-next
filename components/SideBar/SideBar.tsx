@@ -32,7 +32,7 @@ const SideBar: FC<SideBarProps> = ({ categories }) => {
     <div className={styles.container}>
       <p className={styles.titleCategories}>Categories</p>
       <ul>
-        {categories.map((category: string) => (
+        {categories?.map((category: string) => (
           <li key={category}>
             <button onClick={() => handleFilterCategory(category)} className={styles.button}>
               {category}

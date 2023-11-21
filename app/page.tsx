@@ -5,20 +5,25 @@ import SideBar from "@/components/SideBar/SideBar"
 import { getCategories, getProducts } from "@/services/requests"
 import { Product } from "@/types"
 import useSWR from "swr";
+import Loading from "./loading"
 
-export default function Home() {
-  const { data: products, isLoading } = useSWR("products", getProducts);
+const Home = () => {
+  const { data: products, isLoading, error } = useSWR("products", getProducts);
   const { data: categories } = useSWR("categories", getCategories);
 
-  if (products === undefined || categories === undefined || isLoading) {
+  if (categories === undefined) {
     return null
+  }
+  
+  if (isLoading) {
+    return <Loading />
   }
 
   return (
     <div className={'container'}>
       <SideBar categories={categories} />
       <div className={'productsContainer'}>
-        {products.map((product: Product) => (
+        {products?.map((product: Product) => (
             <ProductCard 
             id={product.id}
             title={product.title}
@@ -31,3 +36,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home;

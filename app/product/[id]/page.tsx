@@ -2,6 +2,11 @@ import { Product } from "@/types";
 import styles from './ProductPage.module.scss';
 import CounterProducts from "@/components/CounterProducts/CounterProducts";
 import { getProduct } from "@/services/requests";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Product',
+}
 
 type ProductProps = {
   params: {

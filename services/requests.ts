@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getProducts = async() => {
   try {
-    const { data }: { data: Products | undefined } = await axios.get('http://localhost:3002/products');
+    const { data }: { data: Products } = await axios.get('http://localhost:3002/products');
 
     return data
   } catch(error) {
