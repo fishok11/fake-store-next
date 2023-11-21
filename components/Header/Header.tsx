@@ -1,20 +1,39 @@
 'use client'
 
-import { FC } from 'react';
+import { FC, FormEventHandler, useState } from 'react';
 import styles from './Header.module.scss'
 import Link from 'next/link';
+import { getProductsBySearch } from '@/services/requests';
+import useSWR from 'swr';
 
 const Header: FC = () => {
-  // const dispatch = useAppDispatch();
+  const { mutate } = useSWR("products");
+  const [search, setSearch] = useState("");
+  // const getPostsBySearch = usePosts((state) => state.getPostsBySearch);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    const products = await getProductsBySearch(search);
+
+    mutate(products);
+    console.log(products);
+  };
 
   return (
     <header className={styles.container}>
       <div className={styles.items}>
         <Link href={'/'} className={styles.logo}> Fake</Link>
-        <div className={styles.serch}>
-          <input className={styles.input} placeholder={'Serch...'} name='serch'/>
-          <button className={styles.button}>ok</button>
-        </div>
+        <form className={styles.serch} onSubmit={handleSubmit}>
+          <input 
+            className={styles.input} 
+            placeholder={'Serch...'} 
+            name='serch' 
+            value={search} 
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className={styles.button} type="submit">ok</button>
+        </form>
         <div className={styles.actionContainer}>
           <>
             <Link className={styles.ico} href={`/profile`}>Profile</Link>

@@ -1,33 +1,16 @@
+'use client'
+
 import ProductCard from "@/components/ProductCard/ProductCard"
 import SideBar from "@/components/SideBar/SideBar"
+import { getCategories, getProducts } from "@/services/requests"
 import { Product, Products } from "@/types"
-import axios from "axios"
+import useSWR from "swr";
 
-export const getProducts = async() => {
-  try {
-    const { data }: { data: Products | undefined } = await axios.get('https://fakestoreapi.com/products');
+export default function Home() {
+  const { data: products, isLoading } = useSWR("products", getProducts);
+  const { data: categories } = useSWR("categories", getCategories);
 
-    return data
-  } catch(error) {
-    console.log(error);
-  }
-}
-
-const getCategories = async() => {
-  try {
-    const { data }: { data: string[] | undefined } = await axios.get('https://fakestoreapi.com/products/categories')
-    
-    return data;
-  } catch(error) {
-    console.log(error);
-  }
-}
-
-export default async function Home() {
-  const products: Products | undefined = await getProducts()
-  const categories: string[] | undefined = await getCategories()
-
-  if (products === undefined || categories === undefined) {
+  if (products === undefined || categories === undefined || isLoading) {
     return (
       <p>
         Loading...

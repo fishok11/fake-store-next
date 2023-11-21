@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .container {
-  @apply p-3 mb-7;
+  @apply py-3 mb-7;
 
   .items {
     @apply flex justify-between max-w-7xl mx-auto;

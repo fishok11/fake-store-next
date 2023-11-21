@@ -1,17 +1,7 @@
-import axios from "axios";
 import { Product } from "@/types";
 import styles from './ProductPage.module.scss';
 import CounterProducts from "@/components/CounterProducts/CounterProducts";
-
-export const getProducts = async(id: number) => {
-  try {
-    const { data }: { data: Product | undefined } = await axios.get(`https://fakestoreapi.com/products/${id}`);
-
-    return data
-  } catch(error) {
-    console.log(error);
-  }
-}
+import { getProduct } from "@/services/requests";
 
 type ProductProps = {
   params: {
@@ -20,9 +10,7 @@ type ProductProps = {
 }
 
 const Product = async({ params: { id } }: ProductProps) => {
-  console.log(id);
-  
-  const product: Product | undefined = await getProducts(id)
+  const product: Product | undefined = await getProduct(id)
 
   if (product === undefined) {
     return (

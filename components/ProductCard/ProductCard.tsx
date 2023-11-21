@@ -1,7 +1,7 @@
 'use client'
 
 import { FC } from 'react';
-import { CartItemToAdded, Product } from '@/types';
+import { Product } from '@/types';
 import styles from './ProductCard.module.scss'
 import Link from 'next/link';
 
