@@ -1,0 +1,35 @@
+// @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  @apply p-3 mb-7;
+
+  .items {
+    @apply flex justify-between max-w-7xl mx-auto;
+
+    .serch {
+      @apply flex shadow-xl rounded-xl w-72;
+
+      .input {
+        @apply text-gray-900 text-sm rounded-l-xl outline-none block w-full p-1.5 box-border;
+      }
+  
+      .button {
+        @apply block bg-white hover:bg-slate-100 duration-500 font-medium rounded-r-xl text-base text-gray-700 px-5 py-1.5 text-center box-border;
+      }
+    }
+
+    .logo {
+      @apply flex items-center gap-2 text-xl text-blue-700 font-bold;
+    }
+
+    .actionContainer {
+      @apply flex gap-5 items-center;
+
+      .ico {
+        @apply text-xl text-blue-700;
+      }
+    }
+  }
+}
