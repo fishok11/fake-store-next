@@ -3,7 +3,7 @@
 import ProductCard from "@/components/ProductCard/ProductCard"
 import SideBar from "@/components/SideBar/SideBar"
 import { getCategories, getProducts } from "@/services/requests"
-import { Product, Products } from "@/types"
+import { Product } from "@/types"
 import useSWR from "swr";
 
 export default function Home() {
@@ -11,11 +11,7 @@ export default function Home() {
   const { data: categories } = useSWR("categories", getCategories);
 
   if (products === undefined || categories === undefined || isLoading) {
-    return (
-      <p>
-        Loading...
-      </p>
-    )
+    return null
   }
 
   return (

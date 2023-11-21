@@ -23,7 +23,7 @@ export const getProductsBySearch = async(search: string) => {
 
 export const getProductsInCategory = async(category: string) => {
   try {
-    const { data }: { data: Products | undefined } = await axios.get(`http://localhost:3002/products?q=${category}`);
+    const { data }: { data: Products | undefined } = await axios.get(`http://localhost:3002/products?category=${category}`);
 
     return data
   } catch(error) {

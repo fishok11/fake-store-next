@@ -1,13 +1,32 @@
 'use client'
 
-import { FC } from 'react';
+import { FC, FormEventHandler } from 'react';
 import styles from './SideBar.module.scss'
+import { getProducts, getProductsInCategory } from '@/services/requests';
+import useSWR from 'swr';
 
 export type SideBarProps = {
   categories: Array<string>
 };
 
 const SideBar: FC<SideBarProps> = ({ categories }) => {
+  const { mutate } = useSWR("products");
+  // const [cat, setSearch] = useState("");
+  // const getPostsBySearch = usePosts((state) => state.getPostsBySearch);
+
+  const handleFilterCategory = async (category: string) => {
+    const products = await getProductsInCategory(category);
+
+    mutate(products);
+    console.log(products);
+  };
+
+  const handleClear = async () => {
+    const products = await getProducts();
+
+    mutate(products);
+    console.log(products);
+  };
 
   return (
     <div className={styles.container}>
@@ -15,13 +34,13 @@ const SideBar: FC<SideBarProps> = ({ categories }) => {
       <ul>
         {categories.map((category: string) => (
           <li key={category}>
-            <button onClick={() => console.log(category)} className={styles.button}>
+            <button onClick={() => handleFilterCategory(category)} className={styles.button}>
               {category}
             </button>
           </li>
         ))}
       </ul>
-      <button onClick={() => console.log("Clear")} className={styles.clearButton}>Clear</button>
+      <button onClick={() => handleClear()} className={styles.clearButton}>Clear</button>
     </div>
   );
 }

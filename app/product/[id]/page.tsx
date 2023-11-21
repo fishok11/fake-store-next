@@ -13,11 +13,7 @@ const Product = async({ params: { id } }: ProductProps) => {
   const product: Product | undefined = await getProduct(id)
 
   if (product === undefined) {
-    return (
-      <p>
-        Loading...
-      </p>
-    )
+    return null
   }
 
   return (

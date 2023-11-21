@@ -9,7 +9,6 @@ import useSWR from 'swr';
 const Header: FC = () => {
   const { mutate } = useSWR("products");
   const [search, setSearch] = useState("");
-  // const getPostsBySearch = usePosts((state) => state.getPostsBySearch);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -17,7 +16,6 @@ const Header: FC = () => {
     const products = await getProductsBySearch(search);
 
     mutate(products);
-    console.log(products);
   };
 
   return (
