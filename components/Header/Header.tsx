@@ -42,18 +42,18 @@ const Header: FC = () => {
             <button className={styles.button} type="submit">ok</button>
           </form>
           <div className={styles.actionContainer}>
-            {userCookies && (
+            {/* {userCookies && ( */}
               <>
                 <Link className={styles.ico} href={`/profile`}>Profile</Link>
                 <Link className={styles.ico} href={`/cart`}>Cart</Link>
               </>
-             )}
-            {!userCookies && (
+             {/* )} */}
+            {/* {!userCookies && ( */}
               <>
                 <button className={styles.ico} onClick={() => setLogInActive(true)}>Log in</button>
                 <button className={styles.ico} onClick={() => setSignUpActive(true)}>Sign up</button>
               </>
-            )}
+            {/* )} */}
           </div>
         </div>
       </header>

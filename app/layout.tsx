@@ -18,9 +18,9 @@ export default async function RootLayout({
       <body>
         <Header />
         <main>
-        <Suspense fallback={<Loading />}>
-          {children}
-        </Suspense>
+          <Suspense fallback={<Loading />}>
+            {children}
+          </Suspense>
         </main>
       </body>
     </html>

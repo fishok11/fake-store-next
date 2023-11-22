@@ -168,3 +168,28 @@ export const logInUser = async(user: UserLogIn) => {
     return null; 
   }
 }
+
+// export const getUser = async(id: string) => {
+//   try {
+//     const docRef = doc(db, "users", id);
+//     const docUser = await getDoc(docRef);
+
+//     if (docUser.exists()) {
+//       const data: User = {
+//         id: docUser.id,
+//         username: docUser.data().username,
+//         password: docUser.data().password,
+//         email: docUser.data().email,
+//       };
+
+//       console.log(data);
+      
+//       return data;
+//     } else {
+//       return null; 
+//     }
+//   } catch(error) {
+//     console.log(error);
+//     return null; 
+//   }
+// }
