@@ -27,9 +27,12 @@ body {
 }  */
 
 body {
-  @apply flex w-full max-w-7xl mx-auto justify-between flex-col;
+  @apply flex w-full max-w-7xl mx-auto flex-col;
 }
 
+main {
+  @apply min-h-full;
+}
 .productsContainer {
   @apply grid grid-cols-3 gap-4 min-w-min;
 }

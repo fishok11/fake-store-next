@@ -27,12 +27,8 @@
     .actionContainer {
       @apply flex gap-5 items-center;
 
-      .button {
+      .ico {
         @apply text-xl text-blue-700;
-      }
-
-      .buttonDisabled {
-        @apply text-xl text-gray-700;
       }
     }
   }

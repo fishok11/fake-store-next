@@ -1,8 +1,10 @@
+import styles from '@/app/index.module.scss'
+
 const Loading = () => {
   return (
-    <p>
-      Loading...
-    </p>     
+    <div className={styles.container}>
+      <svg aria-hidden="true" className={styles.loader} />
+    </div>
   )
 };
 

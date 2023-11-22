@@ -47,18 +47,11 @@ const Header: FC = () => {
             <button className={styles.button} type="submit">ok</button>
           </form>
           <div className={styles.actionContainer}>
-            {isLoggedIn && (
-              <>
-                <Link className={styles.button} href={`/profile`}>Profile</Link>
-                <Link className={styles.button} href={`/cart`}>Cart</Link>
-              </>
-             )}
-            {!isLoggedIn && (
-              <>
-                <button className={styles.button} onClick={() => setLogInActive(true)}>Log in</button>
-                <button className={styles.button} onClick={() => setSignUpActive(true)}>Sign up</button>
-              </>
-            )} 
+            {isLoggedIn && (<Link className={styles.ico} href={`/profile`}>Profile</Link>)}
+            {isLoggedIn && (<Link className={styles.ico} href={`/cart`}>Cart</Link>)}
+
+            {!isLoggedIn && (<button className={styles.ico} onClick={() => setLogInActive(true)}>Log in</button>)}
+            {!isLoggedIn && (<button className={styles.ico} onClick={() => setSignUpActive(true)}>Sign up</button>)}
           </div>
         </div>
       </header>
