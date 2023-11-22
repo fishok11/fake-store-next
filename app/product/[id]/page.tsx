@@ -15,12 +15,12 @@ type ProductProps = {
 }
 
 const ProductPage = async({ params: { id } }: ProductProps) => {
-  const product: Product | undefined | null = await getProduct(id)
+  const product: Product | undefined | null = await getProduct(id);
 
   if (product === undefined || product === null) {
-    return null
+    return null;
   }
-  console.log(product);
+  
   return (
       <div className={styles.container}>
         <div className={styles.productContainer}>

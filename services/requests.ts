@@ -1,6 +1,6 @@
 import { Product, Products } from "@/types";
 import axios from "axios";
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import db from "@/firebase"
 
 export const getProducts = async() => {
@@ -52,7 +52,7 @@ export const getProductsBySearch = async(search: string) => {
 export const getProductsInCategory = async(category: string) => {
   try {
     const docRef = query(collection(db, "products"), where("category", "==", category));
-    const docs = await getDocs(docRef, );
+    const docs = await getDocs(docRef);
     let data: Product[] = [];
 
     docs.forEach((doc) => {
@@ -87,7 +87,7 @@ export const getProduct = async(id: string) => {
 
     if (docProduct.exists()) {
       const data: Product = {
-        id: docProduct.data().id,
+        id: docProduct.id,
         title: docProduct.data().title,
         price: docProduct.data().price,
         category: docProduct.data().category,
@@ -111,8 +111,8 @@ export const getProduct = async(id: string) => {
 
 export const getCategories = async() => {
   try {
-    const { data }: { data: string[] | undefined } = await axios.get('http://localhost:3002/categories');
-    
+    const { data }: { data: string[]} = await axios.get('https://fakestoreapi.com/products/categories');
+      
     return data;
   } catch(error) {
     console.log(error);
