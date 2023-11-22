@@ -1,4 +1,4 @@
-import { Cart, Product, Products, User, UserCart, UserCartToAdded, UserSignUp } from "@/types";
+import { Cart, Product, Products, User, UserCartToAdded, UserLogIn, UserSignUp } from "@/types";
 import axios from "axios";
 import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import db from "@/firebase"
@@ -11,7 +11,7 @@ export const getProducts = async() => {
 
     docs.forEach((doc) => {
       const product: Product = {
-        id: doc.data().id,
+        id: doc.id,
         title: doc.data().title,
         price: doc.data().price,
         category: doc.data().category,
@@ -22,8 +22,7 @@ export const getProducts = async() => {
           count: doc.data().rating.count,
         }
       };
-      product.id = doc.id
-      if (data === undefined) return null
+
       data?.push(product)
     });
 
@@ -57,7 +56,7 @@ export const getProductsInCategory = async(category: string) => {
 
     docs.forEach((doc) => {
       const product: Product = {
-        id: doc.data().id,
+        id: doc.id,
         title: doc.data().title,
         price: doc.data().price,
         category: doc.data().category,
@@ -68,8 +67,7 @@ export const getProductsInCategory = async(category: string) => {
           count: doc.data().rating.count,
         }
       };
-      product.id = doc.id;
-      if (data === undefined) return null;
+
       data.push(product);
     });
 
@@ -140,6 +138,29 @@ export const createUser = async(user: UserSignUp) => {
     const data = await addDoc(collection(db, "users"), user); 
 
     createUserCart(data.id)
+
+    return data;
+  } catch(error) {
+    console.log(error);
+    return null; 
+  }
+}
+
+export const logInUser = async(user: UserLogIn) => {
+  try {
+    const docRef = query(collection(db, "users"), where("username", "==", user.username), where("password", "==", user.password));
+    const docs = await getDocs(docRef);
+    let data: Partial<User> = {};
+
+    docs.forEach((doc) => {
+      const user: Partial<User> = {
+        id: doc.id,
+        username: doc.data().username,
+        password: doc.data().password,
+      };
+
+      data = {...user};
+    });
 
     return data;
   } catch(error) {

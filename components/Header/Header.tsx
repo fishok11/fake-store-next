@@ -34,7 +34,7 @@ const Header: FC = () => {
           <form className={styles.serch} onSubmit={handleSubmit}>
             <input 
               className={styles.input} 
-              placeholder={'Serch...'} 
+              placeholder={'Search...'} 
               name='serch' 
               value={search} 
               onChange={(e) => setSearch(e.target.value)}

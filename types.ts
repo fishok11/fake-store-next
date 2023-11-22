@@ -22,6 +22,11 @@ export type User = {
   password: string;
 }
 
+export type UserLogIn = {
+  username: string;
+  password: string;
+}
+
 export type UserSignUp = {
   email: string;
   username: string;

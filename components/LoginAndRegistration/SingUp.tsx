@@ -35,7 +35,7 @@ const SignUp: FC<SignUpProps> = ({ signUpActive, closeSignUpWindow }) => {
       setError(true);
     }
   }
-  
+
   if (signUpActive === false) return null;
 
   return (

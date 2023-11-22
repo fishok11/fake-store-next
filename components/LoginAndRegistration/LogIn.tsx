@@ -5,6 +5,9 @@ import { useState } from 'react';
 import styles from './LoginAndRegistration.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { UserLogIn } from '@/types';
+import { logInUser } from '@/services/requests';
+import { setCookie } from 'cookies-next';
 
 type LogInProps = {
   logInActive: boolean;
@@ -16,19 +19,21 @@ const LogIn: FC<LogInProps> = ({ logInActive, closeLogInWindow }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // const handleChange = () => {
-  //   const user = stateUser.users.find((user) => user.username === username && user.password === password);
-  //   if (user) {
-  //     setError(false);
-  //     dispatch(hideLogInPage());
-  //     if (cookies.user === undefined) {
-  //       setCookie('user', user, { expires: cookiesLifetime })
-  //     }
-  //     toast.success('Success!');
-  //   } else {
-  //     setError(true);
-  //   }
-  // };
+  const user: UserLogIn = {
+    username: username,
+    password: password,
+  }
+
+  const handleChange = async (user: UserLogIn | undefined) => {
+    if (username !== '' && password !== '' && user !== undefined) {
+      setError(false);
+      const userData = await logInUser(user);
+      setCookie('user', userData?.id, { maxAge: 259200 });
+      closeLogInWindow(false);
+    } else {
+      setError(true);
+    }
+  }
 
   if (logInActive === false) return null;
 
@@ -39,7 +44,7 @@ const LogIn: FC<LogInProps> = ({ logInActive, closeLogInWindow }) => {
         <p className={styles.title}>Log in</p>
         <input type="text" placeholder='Username' name='username' className={styles.input} value={username} onChange={(e) => setUsername(e.target.value)} />
         <input type="password" placeholder='Password' name='password' className={styles.input} value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button className={styles.button} onClick={() => console.log('handleChange')}>OK</button>
+        <button className={styles.button} onClick={() => handleChange(user)}>OK</button>
         {error && (<p className={styles.error}>Fill in all the fields!</p>)}
       </div>
     </div>
