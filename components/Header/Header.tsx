@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, FormEventHandler, useState } from 'react';
+import { FC, FormEventHandler, useEffect, useState } from 'react';
 import styles from './Header.module.scss'
 import Link from 'next/link';
 import { getProductsBySearch } from '@/services/requests';
@@ -14,6 +14,7 @@ const Header: FC = () => {
   const [search, setSearch] = useState("");
   const [logInActive, setLogInActive] = useState(false);
   const [signUpActive, setSignUpActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const userCookies = getCookie('user');
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -23,6 +24,10 @@ const Header: FC = () => {
 
     mutate(products);
   };
+
+  useEffect(() => {
+    setIsLoggedIn(userCookies ? true : false)
+  }, [userCookies])
 
   return (
     <>
@@ -42,18 +47,18 @@ const Header: FC = () => {
             <button className={styles.button} type="submit">ok</button>
           </form>
           <div className={styles.actionContainer}>
-            {/* {userCookies && ( */}
+            {isLoggedIn && (
               <>
-                <Link className={styles.ico} href={`/profile`}>Profile</Link>
-                <Link className={styles.ico} href={`/cart`}>Cart</Link>
+                <Link className={styles.button} href={`/profile`}>Profile</Link>
+                <Link className={styles.button} href={`/cart`}>Cart</Link>
               </>
-             {/* )} */}
-            {/* {!userCookies && ( */}
+             )}
+            {!isLoggedIn && (
               <>
-                <button className={styles.ico} onClick={() => setLogInActive(true)}>Log in</button>
-                <button className={styles.ico} onClick={() => setSignUpActive(true)}>Sign up</button>
+                <button className={styles.button} onClick={() => setLogInActive(true)}>Log in</button>
+                <button className={styles.button} onClick={() => setSignUpActive(true)}>Sign up</button>
               </>
-            {/* )} */}
+            )} 
           </div>
         </div>
       </header>
