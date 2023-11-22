@@ -1,31 +1,25 @@
 'use client'
 
-import { FC, FormEventHandler } from 'react';
+import { FC } from 'react';
 import styles from './SideBar.module.scss'
-import { getProducts, getProductsInCategory } from '@/services/requests';
+import { getCategories, getProducts, getProductsInCategory } from '@/services/requests';
 import useSWR from 'swr';
 
-export type SideBarProps = {
-  categories: Array<string>
-};
+const SideBar: FC = () => {
+  const { data: categories } = useSWR("categories", getCategories);
 
-const SideBar: FC<SideBarProps> = ({ categories }) => {
   const { mutate } = useSWR("products");
-  // const [cat, setSearch] = useState("");
-  // const getPostsBySearch = usePosts((state) => state.getPostsBySearch);
 
   const handleFilterCategory = async (category: string) => {
     const products = await getProductsInCategory(category);
 
     mutate(products);
-    console.log(products);
   };
 
   const handleClear = async () => {
     const products = await getProducts();
 
     mutate(products);
-    console.log(products);
   };
 
   return (

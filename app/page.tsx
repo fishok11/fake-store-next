@@ -2,18 +2,13 @@
 
 import ProductCard from "@/components/ProductCard/ProductCard"
 import SideBar from "@/components/SideBar/SideBar"
-import { getCategories, getProducts } from "@/services/requests"
+import { getProducts } from "@/services/requests"
 import { Product } from "@/types"
 import useSWR from "swr";
 import Loading from "./loading"
 
 const Home = () => {
-  const { data: products, isLoading, error } = useSWR("products", getProducts);
-  const { data: categories } = useSWR("categories", getCategories);
-
-  if (categories === undefined) {
-    return null
-  }
+  const { data: products, isLoading } = useSWR("products", getProducts);
   
   if (isLoading) {
     return <Loading />
@@ -21,7 +16,7 @@ const Home = () => {
 
   return (
     <div className={'container'}>
-      <SideBar categories={categories} />
+      <SideBar  />
       <div className={'productsContainer'}>
         {products?.map((product: Product) => (
             <ProductCard 

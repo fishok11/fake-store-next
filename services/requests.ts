@@ -1,13 +1,13 @@
 import { Product, Products } from "@/types";
 import axios from "axios";
-import { DocumentData, addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import db from "@/firebase"
 
 export const getProducts = async() => {
   try {
     const docRef = query(collection(db, "products"));
     const docs = await getDocs(docRef);
-    let data: Product[] = [];
+    let data: Products | null = [];
 
     docs.forEach((doc) => {
       const product: Product = {
@@ -24,7 +24,7 @@ export const getProducts = async() => {
       };
       product.id = doc.id
       if (data === undefined) return null
-      data.push(product)
+      data?.push(product)
     });
 
     return data;
@@ -36,31 +36,13 @@ export const getProducts = async() => {
 
 export const getProductsBySearch = async(search: string) => {
   try {
-    const docRef = query(collection(db, "products"));
-    const docs = await getDocs(docRef, );
-    let data: Product[] = [];
+    let data: Products | null = await getProducts();
 
-    docs.forEach((doc) => {
-      const product: Product = {
-        id: doc.data().id,
-        title: doc.data().title,
-        price: doc.data().price,
-        category: doc.data().category,
-        description: doc.data().description,
-        image: doc.data().image,
-        rating: {
-          rate: doc.data().rating.rate,
-          count: doc.data().rating.count,
-        }
-      };
-      product.id = doc.id
-      if (data === undefined) return null
-      data.push(product)
-    });
+    if (data === null) return null;
 
-    data = data.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()))
+    data = data.filter((product) => product.title.toLowerCase().includes(search.toLowerCase()));
 
-    return data
+    return data;
   } catch(error) {
     console.log(error);
     return null; 
@@ -86,21 +68,10 @@ export const getProductsInCategory = async(category: string) => {
           count: doc.data().rating.count,
         }
       };
-      product.id = doc.id
-      if (data === undefined) return null
-      data.push(product)
+      product.id = doc.id;
+      if (data === undefined) return null;
+      data.push(product);
     });
-    
-    return data;
-  } catch(error) {
-    console.log(error);
-    return null; 
-  }
-}
-
-export const getCategories = async() => {
-  try {
-    const { data }: { data: string[] | undefined } = await axios.get('http://localhost:3002/categories')
     
     return data;
   } catch(error) {
@@ -132,6 +103,17 @@ export const getProduct = async(id: string) => {
     } else {
       return null; 
     }
+  } catch(error) {
+    console.log(error);
+    return null; 
+  }
+}
+
+export const getCategories = async() => {
+  try {
+    const { data }: { data: string[] | undefined } = await axios.get('http://localhost:3002/categories');
+    
+    return data;
   } catch(error) {
     console.log(error);
     return null; 
