@@ -16,7 +16,7 @@ export type Products = Product[];
 //=======================================================================
 
 export type User = {
-  id: number | null;
+  id: string | null;
   email: string;
   username: string;
   password: string;
@@ -35,17 +35,17 @@ export type ProductInCart = {
   quantity: number;
 }
 
-export type CartItemToAdded = {
-  userId: number;
+export type UserCartToAdded = {
+  userId: string;
   products: ProductInCart[];
 };
 
-export type CartItem = {
-  id: number;
-  userId: number;
+export type UserCart = {
+  id: string;
+  userId: string;
   products: ProductInCart[];
 }; 
 
-export type Cart = CartItem[];
+export type Cart = UserCart[];
 
 //=======================================================================

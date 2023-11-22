@@ -1,4 +1,4 @@
-import { Product, Products } from "@/types";
+import { Cart, Product, Products, User, UserCart, UserCartToAdded, UserSignUp } from "@/types";
 import axios from "axios";
 import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import db from "@/firebase"
@@ -72,7 +72,7 @@ export const getProductsInCategory = async(category: string) => {
       if (data === undefined) return null;
       data.push(product);
     });
-    
+
     return data;
   } catch(error) {
     console.log(error);
@@ -113,6 +113,34 @@ export const getCategories = async() => {
   try {
     const { data }: { data: string[]} = await axios.get('https://fakestoreapi.com/products/categories');
       
+    return data;
+  } catch(error) {
+    console.log(error);
+    return null; 
+  }
+}
+
+export const createUserCart = async(userId: string) => {
+  try {
+    const cart: UserCartToAdded = {
+      userId: userId,
+      products: []
+    }
+    const data = await addDoc(collection(db, "carts"), cart); 
+      
+    return data;
+  } catch(error) {
+    console.log(error);
+    return null; 
+  }
+}
+
+export const createUser = async(user: UserSignUp) => {
+  try {
+    const data = await addDoc(collection(db, "users"), user); 
+
+    createUserCart(data.id)
+
     return data;
   } catch(error) {
     console.log(error);

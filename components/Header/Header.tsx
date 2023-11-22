@@ -7,12 +7,14 @@ import { getProductsBySearch } from '@/services/requests';
 import useSWR from 'swr';
 import LogIn from '../LoginAndRegistration/LogIn';
 import SignUp from '../LoginAndRegistration/SingUp';
+import { getCookie } from 'cookies-next';
 
 const Header: FC = () => {
   const { mutate } = useSWR("products");
   const [search, setSearch] = useState("");
   const [logInActive, setLogInActive] = useState(false);
   const [signUpActive, setSignUpActive] = useState(false);
+  const userCookies = getCookie('user');
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -40,12 +42,18 @@ const Header: FC = () => {
             <button className={styles.button} type="submit">ok</button>
           </form>
           <div className={styles.actionContainer}>
-            <>
-              <Link className={styles.ico} href={`/profile`}>Profile</Link>
-              <Link className={styles.ico} href={`/cart`}>Cart</Link>
-            </>
-            <button className={styles.ico} onClick={() => setLogInActive(true)}>Log in</button>
-            <button className={styles.ico} onClick={() => setSignUpActive(true)}>Sign up</button>
+            {userCookies && (
+              <>
+                <Link className={styles.ico} href={`/profile`}>Profile</Link>
+                <Link className={styles.ico} href={`/cart`}>Cart</Link>
+              </>
+             )}
+            {!userCookies && (
+              <>
+                <button className={styles.ico} onClick={() => setLogInActive(true)}>Log in</button>
+                <button className={styles.ico} onClick={() => setSignUpActive(true)}>Sign up</button>
+              </>
+            )}
           </div>
         </div>
       </header>

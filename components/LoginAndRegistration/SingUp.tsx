@@ -6,6 +6,8 @@ import styles from './LoginAndRegistration.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { UserSignUp } from '@/types';
+import { createUser } from '@/services/requests';
+import { setCookie } from 'cookies-next';
 
 type SignUpProps = {
   signUpActive: boolean;
@@ -23,21 +25,17 @@ const SignUp: FC<SignUpProps> = ({ signUpActive, closeSignUpWindow }) => {
     password: password,
   }
 
-  // const handleChange = async (user: UserSignUp | undefined) => {
-  //   if (email !== '' && username !== '' && password !== '' && user !== undefined) {
-  //     setError(false);
-  //     const resultAction = await dispatch(signUp(user));
-  //     const userData = resultAction.payload;
-  //     if (resultAction.type === 'user/signUp/fulfilled') {
-  //       dispatch(hideSignUpPage());
-  //       if (cookies.user === undefined) {
-  //         setCookie('user', userData, { expires: cookiesLifetime })
-  //       }
-  //     }
-  //   } else {
-  //     setError(true);
-  //   }
-  // }
+  const handleChange = async (user: UserSignUp | undefined) => {
+    if (email !== '' && username !== '' && password !== '' && user !== undefined) {
+      setError(false);
+      const userData = await createUser(user);
+      setCookie('user', userData?.id, { maxAge: 259200 });
+      closeSignUpWindow(false);
+    } else {
+      setError(true);
+    }
+  }
+  
   if (signUpActive === false) return null;
 
   return (
@@ -48,7 +46,7 @@ const SignUp: FC<SignUpProps> = ({ signUpActive, closeSignUpWindow }) => {
         <input type="text" placeholder='Email' name='email' className={styles.input} value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="text" placeholder='Username' name='username' className={styles.input} value={username} onChange={(e) => setUsername(e.target.value)} />
         <input type="password" placeholder='Password' name='password' className={styles.input} value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button className={styles.button} onClick={() => console.log('handleChange')}>OK</button>
+        <button className={styles.button} onClick={() => handleChange(user)}>OK</button>
         {error && (<p className={styles.error}>Fill in all the fields!</p>)}
       </div>
     </div>
