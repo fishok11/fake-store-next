@@ -183,7 +183,7 @@ export const logInUser = async(user: UserLogIn) => {
   }
 }
 
-const getUserCart = async(cartId: string) => {
+export const getUserCart = async(cartId: string) => {
   try {
     const docRef = doc(db, "carts", cartId);
     const docCart= await getDoc(docRef);
