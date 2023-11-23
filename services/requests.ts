@@ -7,7 +7,7 @@ export const getProducts = async() => {
   try {
     const docRef = query(collection(db, "products"));
     const docs = await getDocs(docRef);
-    let data: Products | null = [];
+    let data: Products = [];
 
     docs.forEach((doc) => {
       const product: Product = {
@@ -23,7 +23,7 @@ export const getProducts = async() => {
         }
       };
 
-      data?.push(product)
+      data.push(product)
     });
 
     return data;
@@ -98,9 +98,7 @@ export const getProduct = async(id: string) => {
       };
       
       return data;
-    } else {
-      return null; 
-    }
+    } 
   } catch(error) {
     console.log(error);
     return null; 
@@ -124,6 +122,7 @@ export const createUserCart = async(userId: string) => {
       userId: userId,
       products: []
     }
+    
     const data = await addDoc(collection(db, "carts"), cart); 
       
     return data;
@@ -159,7 +158,7 @@ export const logInUser = async(user: UserLogIn) => {
         password: doc.data().password,
       };
 
-      data = {...user};
+      data = user;
     });
 
     return data;
