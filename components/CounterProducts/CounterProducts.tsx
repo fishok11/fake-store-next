@@ -1,9 +1,18 @@
 "use client"
 
 import styles from '@/components/CounterProducts/CounterProducts.module.scss'
-import { useState } from 'react';
+import { addProductToCart } from '@/services/requests';
+import { ProductInCart } from '@/types';
+import { getCookie } from 'cookies-next';
+import { FC, useState } from 'react';
 
-const CounterProducts = ({ price }: { price: number }) => {
+type CounterProductsProps = {
+  price: number;
+  id: string;
+}
+
+const CounterProducts: FC<CounterProductsProps> = ({ price, id }) => {
+  const cartId = getCookie('cart');
  const [count, setCount] = useState(1);
   const decrease = () => {
     if (count > 1) {
@@ -14,6 +23,19 @@ const CounterProducts = ({ price }: { price: number }) => {
     setCount(count => count + 1);
   };
 
+  const product: ProductInCart = {
+    productId: id,
+    quantity: count,
+  }
+
+  if (cartId === undefined) { 
+    return (
+      <h1>
+        Log in to add to cart
+      </h1>
+    )
+  };
+  
   return (
     <div className={styles.actionContainer}>
       <p className={styles.price}>{price * count} $</p>
@@ -22,7 +44,7 @@ const CounterProducts = ({ price }: { price: number }) => {
         <div className={styles.counterSimbol}>{count}</div>
         <button className={styles.counterSimbol} onClick={() => increase()}>+</button>
       </div>
-      <button className={styles.button} onClick={() => console.log('Add to cart')}>Add to cart</button>
+      <button className={styles.button} onClick={() => addProductToCart(cartId.toString(), product)}>Add to cart</button>
     </div> 
 )
 

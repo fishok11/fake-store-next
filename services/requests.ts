@@ -1,7 +1,8 @@
-import { Cart, Product, Products, User, UserCartToAdded, UserLogIn, UserSignUp } from "@/types";
+import { Cart, Product, ProductInCart, Products, User, UserCart, UserCartToAdded, UserLogIn, UserSignUp } from "@/types";
 import axios from "axios";
 import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import db from "@/firebase"
+import toast from "react-hot-toast";
 
 export const getProducts = async() => {
   try {
@@ -28,6 +29,7 @@ export const getProducts = async() => {
 
     return data;
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
@@ -43,6 +45,7 @@ export const getProductsBySearch = async(search: string) => {
 
     return data;
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
@@ -73,6 +76,7 @@ export const getProductsInCategory = async(category: string) => {
 
     return data;
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
@@ -100,6 +104,7 @@ export const getProduct = async(id: string) => {
       return data;
     } 
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
@@ -124,11 +129,10 @@ export const createUserCart = async(userId: string) => {
     }
     
     const data = await addDoc(collection(db, "carts"), cart); 
-
-    
     
     return data;
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
@@ -140,11 +144,14 @@ export const createUser = async(user: UserSignUp) => {
 
     const cartData = await createUserCart(userData.id)
 
+    toast.success('Succes!');
+
     return {
       userData,
       cartData
     };
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
@@ -166,13 +173,58 @@ export const logInUser = async(user: UserLogIn) => {
       data = user;
     });
 
+    toast.success('Succes!');
+
     return data;
   } catch(error) {
+    toast.error('Error!');
     console.log(error);
     return null; 
   }
 }
 
+const getUserCart = async(cartId: string) => {
+  try {
+    const docRef = doc(db, "carts", cartId);
+    const docCart= await getDoc(docRef);
+
+    if (docCart.exists()) {
+      const data: UserCart = {
+        id: docCart.id,
+        userId: docCart.data().userId,
+        products: docCart.data().products,
+      };
+      
+      return data;
+    } 
+  } catch(error) {
+    toast.error('Error!');
+    console.log(error);
+    return null; 
+  }
+} 
+
+export const addProductToCart = async(cartId: string, product: ProductInCart) => {
+  try {
+    const userCart = await getUserCart(cartId)
+
+    if (userCart === undefined || userCart === null) return
+
+    const docGroup = doc(db, "carts", cartId);
+    const data = await updateDoc(docGroup, {
+      ...userCart,
+      products: [product, ...userCart.products] 
+    });
+
+    toast.success('Succes!');
+
+    return data
+  } catch(error) {
+    toast.error('Error!');
+    console.log(error);
+    return null; 
+  }
+}
 // export const getUser = async(id: string) => {
 //   try {
 //     const docRef = doc(db, "users", id);

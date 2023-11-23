@@ -32,7 +32,7 @@ const ProductPage = async({ params: { id } }: ProductProps) => {
               <p className={styles.title}>{product.title}</p>
               <p className={styles.rating}>{product.rating.rate}/{product.rating.count}</p>
             </div>
-            <CounterProducts price={product.price}/>
+            <CounterProducts price={product.price} id={id} />
           </div>
           <p className={styles.description}>{product.description}</p>
         </div>

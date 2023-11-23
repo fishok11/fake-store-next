@@ -36,9 +36,12 @@ export type UserSignUp = {
 //=======================================================================
 
 export type ProductInCart = {
-  productId: number;
+  productId: string;
   quantity: number;
 }
+
+export type ProductsInCart = ProductInCart[];
+
 
 export type UserCartToAdded = {
   userId: string;
