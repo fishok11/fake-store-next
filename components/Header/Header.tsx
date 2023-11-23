@@ -17,7 +17,7 @@ const Header: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const userCookies = getCookie('user');
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async(event) => {
     event.preventDefault();
 
     const products = await getProductsBySearch(search);
@@ -47,11 +47,11 @@ const Header: FC = () => {
             <button className={styles.button} type="submit">ok</button>
           </form>
           <div className={styles.actionContainer}>
-            {isLoggedIn && (<Link className={styles.ico} href={`/profile`}>Profile</Link>)}
-            {isLoggedIn && (<Link className={styles.ico} href={`/cart`}>Cart</Link>)}
-
             {!isLoggedIn && (<button className={styles.ico} onClick={() => setLogInActive(true)}>Log in</button>)}
             {!isLoggedIn && (<button className={styles.ico} onClick={() => setSignUpActive(true)}>Sign up</button>)}
+            
+            {isLoggedIn && (<Link className={styles.ico} href={`/profile`}>Profile</Link>)}
+            {isLoggedIn && (<Link className={styles.ico} href={`/cart`}>Cart</Link>)}
           </div>
         </div>
       </header>

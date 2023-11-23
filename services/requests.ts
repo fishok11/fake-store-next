@@ -124,7 +124,9 @@ export const createUserCart = async(userId: string) => {
     }
     
     const data = await addDoc(collection(db, "carts"), cart); 
-      
+
+    
+    
     return data;
   } catch(error) {
     console.log(error);
@@ -134,11 +136,14 @@ export const createUserCart = async(userId: string) => {
 
 export const createUser = async(user: UserSignUp) => {
   try {
-    const data = await addDoc(collection(db, "users"), user); 
+    const userData = await addDoc(collection(db, "users"), user); 
 
-    createUserCart(data.id)
+    const cartData = await createUserCart(userData.id)
 
-    return data;
+    return {
+      userData,
+      cartData
+    };
   } catch(error) {
     console.log(error);
     return null; 

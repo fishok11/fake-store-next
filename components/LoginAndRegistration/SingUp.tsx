@@ -28,8 +28,9 @@ const SignUp: FC<SignUpProps> = ({ signUpActive, closeSignUpWindow }) => {
   const handleChange = async (user: UserSignUp | undefined) => {
     if (email !== '' && username !== '' && password !== '' && user !== undefined) {
       setError(false);
-      const userData = await createUser(user);
-      setCookie('user', userData?.id, { maxAge: 259200 });
+      const data = await createUser(user);
+      setCookie('user', data?.userData?.id, { maxAge: 259200 });
+      setCookie('cart', data?.cartData?.id, { maxAge: 259200 });
       closeSignUpWindow(false);
     } else {
       setError(true);
