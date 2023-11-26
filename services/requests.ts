@@ -31,7 +31,6 @@ export const getProducts = async() => {
     return data;
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
     return null; 
   }
 }
@@ -47,7 +46,6 @@ export const getProductsBySearch = async(search: string) => {
     return data;
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -77,7 +75,6 @@ export const getProductsInCategory = async(category: string) => {
     return data;
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -104,7 +101,6 @@ export const getProduct = async(id: string) => {
     } 
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -114,7 +110,7 @@ export const getCategories = async() => {
       
     return data;
   } catch(error) {
-    console.log(error);
+    toast.error('Error!');
   }
 }
 
@@ -132,7 +128,6 @@ export const createUserCart = async(userId: string) => {
     return data;
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -156,7 +151,6 @@ export const getUserCart = async() => {
     } 
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 } 
 
@@ -177,7 +171,6 @@ export const addProductToCart = async(product: ProductInCart) => {
     return data
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -197,7 +190,6 @@ export const createUser = async(user: UserSignUp) => {
     };
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -233,7 +225,6 @@ export const logInUser = async(user: UserLogIn) => {
     };
   } catch(error) {
     toast.error('Error!');
-    console.log(error);
   }
 }
 
@@ -257,7 +248,6 @@ export const getUser = async() => {
       return data;
     }
   } catch(error) {
-    console.log(error);
     toast.error('Error!');
   }
 }
