@@ -3,8 +3,6 @@
 import { FC } from 'react';
 import { useState } from 'react';
 import styles from './LoginAndRegistration.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { UserSignUp } from '@/types';
 import { createUser } from '@/services/requests';
 import { setCookie } from 'cookies-next';
@@ -42,7 +40,7 @@ const SignUp: FC<SignUpProps> = ({ signUpActive, closeSignUpWindow }) => {
   return (
     <div className={styles.container}>
       <div className={styles.item}>
-        <div className={styles.close} onClick={() => closeSignUpWindow(false)}><FontAwesomeIcon icon={faXmark} /></div>
+        <div className={styles.close} onClick={() => closeSignUpWindow(false)}>Close</div>
         <p className={styles.title}>Sing up</p>
         <input type="text" placeholder='Email' name='email' className={styles.input} value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="text" placeholder='Username' name='username' className={styles.input} value={username} onChange={(e) => setUsername(e.target.value)} />
