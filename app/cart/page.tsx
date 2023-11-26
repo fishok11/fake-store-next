@@ -13,22 +13,16 @@ import { getUserCart } from '@/services/requests';
 const Cart: FC = async() => {
   const cartId = getCookie('cart');
 
-  console.log(cartId);
-
   if (cartId === undefined) {
-    return null
+    return (
+      <h2>
+        Log in to view the shopping cart
+      </h2>
+    )
   }
 
   const userCart = await getUserCart(cartId.toString());
 
-  if (cartId === undefined) {
-    return (
-      <>
-        loading...
-      </>
-    )
-  }
-  
   return (
     <div>
       {userCart?.products.map((product) => (
