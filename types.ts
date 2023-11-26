@@ -16,7 +16,7 @@ export type Products = Product[];
 //=======================================================================
 
 export type User = {
-  id: string | null;
+  id: string;
   email: string;
   username: string;
   password: string;

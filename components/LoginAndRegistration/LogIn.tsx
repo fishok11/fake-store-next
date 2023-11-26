@@ -27,8 +27,9 @@ const LogIn: FC<LogInProps> = ({ logInActive, closeLogInWindow }) => {
   const handleChange = async (user: UserLogIn | undefined) => {
     if (username !== '' && password !== '' && user !== undefined) {
       setError(false);
-      const userData = await logInUser(user);
-      setCookie('user', userData?.id, { maxAge: 259200 });
+      const data = await logInUser(user);
+      setCookie('user', data?.userData?.id, { maxAge: 259200 });
+      setCookie('cart', data?.cartId, { maxAge: 259200 });
       closeLogInWindow(false);
     } else {
       setError(true);

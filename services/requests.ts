@@ -121,6 +121,8 @@ export const getCategories = async() => {
   }
 }
 
+//=======================================================================================================
+
 export const createUserCart = async(userId: string) => {
   try {
     const cart: UserCartToAdded = {
@@ -130,51 +132,6 @@ export const createUserCart = async(userId: string) => {
     
     const data = await addDoc(collection(db, "carts"), cart); 
     
-    return data;
-  } catch(error) {
-    toast.error('Error!');
-    console.log(error);
-    return null; 
-  }
-}
-
-export const createUser = async(user: UserSignUp) => {
-  try {
-    const userData = await addDoc(collection(db, "users"), user); 
-
-    const cartData = await createUserCart(userData.id)
-
-    toast.success('Succes!');
-
-    return {
-      userData,
-      cartData
-    };
-  } catch(error) {
-    toast.error('Error!');
-    console.log(error);
-    return null; 
-  }
-}
-
-export const logInUser = async(user: UserLogIn) => {
-  try {
-    const docRef = query(collection(db, "users"), where("username", "==", user.username), where("password", "==", user.password));
-    const docs = await getDocs(docRef);
-    let data: Partial<User> = {};
-
-    docs.forEach((doc) => {
-      const user: Partial<User> = {
-        id: doc.id,
-        username: doc.data().username,
-        password: doc.data().password,
-      };
-
-      data = user;
-    });
-
-    toast.success('Succes!');
-
     return data;
   } catch(error) {
     toast.error('Error!');
@@ -225,6 +182,66 @@ export const addProductToCart = async(cartId: string, product: ProductInCart) =>
     return null; 
   }
 }
+
+//=======================================================================================================
+
+export const createUser = async(user: UserSignUp) => {
+  try {
+    const userData = await addDoc(collection(db, "users"), user); 
+
+    const cartData = await createUserCart(userData.id)
+
+    toast.success('Succes!');
+
+    return {
+      userData,
+      cartData
+    };
+  } catch(error) {
+    toast.error('Error!');
+    console.log(error);
+    return null; 
+  }
+}
+
+export const logInUser = async(user: UserLogIn) => {
+  try {
+    const docRefUser = query(collection(db, "users"), where("username", "==", user.username), where("password", "==", user.password));
+    const docsUser = await getDocs(docRefUser);
+    let userData: Partial<User> = {};
+
+    docsUser.forEach((doc) => {
+      const user: Partial<User> = {
+        id: doc.id,
+        username: doc.data().username,
+        password: doc.data().password,
+      };
+
+      userData = user;
+    });
+
+    const docRefCart = query(collection(db, "carts"), where("userId", "==", userData.id));
+    const docsCart = await getDocs(docRefCart);
+    let cartId: string = '';
+
+    docsCart.forEach((doc) => {
+      cartId = doc.id;
+    });
+
+    toast.success('Succes!');
+
+    return {
+      userData,
+      cartId
+    };
+  } catch(error) {
+    toast.error('Error!');
+    console.log(error);
+    return null; 
+  }
+}
+
+
 // export const getUser = async(id: string) => {
 //   try {
 //     const docRef = doc(db, "users", id);
