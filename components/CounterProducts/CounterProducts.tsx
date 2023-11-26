@@ -8,7 +8,7 @@ import { getCookie } from 'cookies-next';
 import { FC, useEffect, useState } from 'react';
 
 type CounterProductsProps = {
-  price: number | undefined;
+  price: number;
   id: string;
 }
 
@@ -35,12 +35,6 @@ const CounterProducts: FC<CounterProductsProps> = ({ price, id }) => {
       </h2>
     )
   }
-
-  if (price === undefined) {
-    return (
-      <Loading />
-    )
-  }
   
   return (
     <div className={styles.actionContainer}>
@@ -50,7 +44,7 @@ const CounterProducts: FC<CounterProductsProps> = ({ price, id }) => {
         <div className={styles.counterSimbol}>{count}</div>
         <button className={styles.counterSimbol} onClick={() => increase()}>+</button>
       </div>
-      <button className={styles.button} onClick={() => addProductToCart(cartId, product)}>Add to cart</button>
+      <button className={styles.button} onClick={() => addProductToCart(product)}>Add to cart</button>
     </div> 
 )
 

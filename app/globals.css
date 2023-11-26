@@ -33,6 +33,7 @@ body {
 main {
   @apply min-h-full;
 }
+
 .productsContainer {
   @apply grid grid-cols-3 gap-4 min-w-min;
 }

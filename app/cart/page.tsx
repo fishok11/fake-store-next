@@ -1,35 +1,24 @@
 'use client'
 
-import { Metadata } from "next";
-import { FC } from "react";
-import styles from '@/app/cart/Cart.module.scss'
-import { getCookie } from "cookies-next";
 import { getUserCart } from '@/services/requests';
+import CartItem from "@/components/CartItem/CartItem";
+import Loading from "../loading";
+import {  ProductInCart } from "@/types";
+import useSWR from 'swr';
 
-// export const metadata: Metadata = {
-//   title: 'Cart',
-// }
+const Cart = () => {
+  const { data: userCart, isLoading } = useSWR("cart", getUserCart);
 
-const Cart: FC = async() => {
-  const cartId = getCookie('cart');
-
-  if (cartId === undefined) {
+  if (isLoading) {
     return (
-      <h2>
-        Log in to view the shopping cart
-      </h2>
+      <Loading />
     )
   }
 
-  const userCart = await getUserCart(cartId.toString());
-
   return (
     <div>
-      {userCart?.products.map((product) => (
-        <p>
-          {product.productId}
-          {product.quantity}
-        </p>
+      {userCart?.products.map((product: ProductInCart) => (
+        <CartItem id={product.productId} key={product.productId}/>
       ))}
     </div>
   )

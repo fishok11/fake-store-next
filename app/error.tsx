@@ -1,6 +1,6 @@
 'use client'
 
-const error = ({ error }: { error: Error}) => {
+const Error = ({ error }: { error: Error}) => {
   return (
     <p>
       {error.message}
@@ -8,4 +8,4 @@ const error = ({ error }: { error: Error}) => {
   )
 };
 
-export default error;
+export default Error;
