@@ -15,7 +15,7 @@ const CartItem = async({ id }: { id: string}) => {
   return (
     <div className={styles.cartItemContainer}>
       <div>
-        <Image src={product?.image} alt={styles.title} className={styles.image} width={128} height={128}/> 
+        <Image src={product?.image} alt={product?.image} className={styles.image} width={128} height={128}/> 
       </div>
       <div>
         <p className={styles.title}>{product?.title}</p>
