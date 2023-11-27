@@ -17,7 +17,7 @@ const ProductCard: FC<ProductCardProps> = ({id, image, title, price}) => {
       <div className={styles.container}>
         <Link href={`/product/${id}`} className={styles.link}>
           <div className={styles.imageContainer}>
-            <img src={image} alt={title} className={styles.image} width={128} height={150}/> 
+            <Image src={image} alt={title} className={styles.image} width={128} height={150}/> 
           </div>
           <p className={styles.title}>{title}</p>
         </Link>
@@ -32,7 +32,7 @@ const ProductCard: FC<ProductCardProps> = ({id, image, title, price}) => {
     <div className={styles.container}>
       <Link href={`/product/${id}`} className={styles.link}>
         <div className={styles.imageContainer}>
-          <img src={image} alt={title} className={styles.image} width={128} height={150}/> 
+          <Image src={image} alt={title} className={styles.image} width={128} height={150}/> 
         </div>
         <p className={styles.title}>{title}</p>
           <div className={styles.actionContainer}>
